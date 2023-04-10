@@ -13,6 +13,10 @@
         /* Insert the CSS code here between the <style> tags */
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
+        #title { z-index: 9999; 
+            background-color:beige; 
+            opacity: 67%; 
+            text-align: left;
         /* covers a full webpage: 0 margins and 100% width */
     </style>
   </head>
@@ -21,25 +25,40 @@
     <!--  Insert the map div here in the <body> of the page  -->
       <div id='map'></div>
     <!--  Insert the tile div here (part V) -->
+      <div id='title'>
+     		<h1>My Map of Portland</h1>
+     		<h2>By: Haley Loren</h2>
+        </div>
 
     <script>
         // Insert the JavaScript within the <script> tags, within the body   
         // Start with the Mapbox access token here
-        mapboxgl.accesstoken = 'pk.eyJ1IjoiaGxvcmVuIiwiYSI6ImNsZzVma3FyMjAyYXczbW1qd3NpZ3h1cXYifQ.W7Tb9Hc9m-XIZsmLlwr-lw';
+        mapboxgl.accessToken = 'pk.eyJ1IjoiaGxvcmVuIiwiYSI6ImNsZzVneHVsdDAzZGgzZ3A2M2tsc3poaGIifQ.bBdl7_xDAAJbX_XYyvXWGw';
         
         // Then initialize the map here
         var map = new mapboxgl.Map({
             container: 'map', // id of a div on your page, where the map will be inserted
-            style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+            style: 'mapbox://styles/hloren/clg5l3n6a000601t83er191u0', // stylesheet location
             center: [-122.6784, 45.5152], // starting position [lng, lat] eg. [-122.6788, 45.5212]
             zoom: 11 // starting zoom 
         });
 
-
         // Add popup markers here  (part IV)
+        var popup = new mapboxgl.Popup({ offset: 25 })
+            .setHTML('Hello World. Welcome to Portland!');
         
+        var marker = new mapboxgl.Marker({
+            color:'#008080',
+        }).setLngLat([-122.6784, 45.5152]) // starting position [lng, lat] 
+            .setPopup(popup) //add the popup with the variable name 'popup' to the marker 
+            .addTo(map);
         // Add any other variables such as markers here (part III)
-
+        var popup_layer = new mapboxgl.Popup({
+            closeOnClick: true, anchor: 'top-right'
+            }) 
+            .setLngLat([-122.68116116710587, 45.523337486042905]) //popup coordinates
+            .setHTML('<a href="https://www.powells.com/">Powels Book Store</a>') //popup text
+            .addTo(map); //add this popup to the map!
         // Add optional advanced "On load" function here
         
     </script>
