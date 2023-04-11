@@ -26,7 +26,7 @@
       <div id='map'></div>
     <!--  Insert the tile div here (part V) -->
       <div id='title'>
-     		<h1>My Map of Portland</h1>
+     		<h1>My (Smaller) Map of Portland</h1>
      		<h2>By: Haley Loren</h2>
         </div>
 
@@ -39,8 +39,8 @@
         var map = new mapboxgl.Map({
             container: 'map', // id of a div on your page, where the map will be inserted
             style: 'mapbox://styles/hloren/clg5l3n6a000601t83er191u0', // stylesheet location
-            center: [-122.6784, 45.5152], // starting position [lng, lat] eg. [-122.6788, 45.5212]
-            zoom: 11 // starting zoom 
+            center: [-122.676312, 45.52302], // starting position [lng, lat] eg. [-122.6788, 45.5212]
+            zoom: 14 // starting zoom  45.52302094461233, -122.67631297522867
         });
 
         // Add popup markers here  (part IV)
@@ -49,7 +49,7 @@
         
         var marker = new mapboxgl.Marker({
             color:'#008080',
-        }).setLngLat([-122.6784, 45.5152]) // starting position [lng, lat] 
+        }).setLngLat([-122.676312, 45.52302]) // starting position [lng, lat] 
             .setPopup(popup) //add the popup with the variable name 'popup' to the marker 
             .addTo(map);
         // Add any other variables such as markers here (part III)
