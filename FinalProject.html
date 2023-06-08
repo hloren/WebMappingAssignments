@@ -5,16 +5,11 @@
     <meta charset='utf-8' />
     <title>Final Project</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <!--    Include the reference to the Mapbox JavaScript here in the <head> of the page    -->
+    <!--  the reference to the Mapbox JavaScript -->
       <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
       <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
 
-<!--
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"></script>
-      
--->
-    <!--    Include the reference to the Mapbox CSS here in the <head> of the page    -->
+    <!--  the reference to the Mapbox CSS  -->
       <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
       <link href="https://fonts.cdnfonts.com/css/dinpro-bold" rel="stylesheet"> 
       <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet"> 
@@ -26,7 +21,7 @@
         #map { position:absolute; height:100%; width:100%; }
         
         
-           /*  style for items with the class "descriptionPanel" */
+           /*  style for "descriptionPanel" */
        .descriptionPanel {
          position: absolute;
          margin: 5px auto;
@@ -46,15 +41,13 @@
          border-radius: 7px;
        } 
        
-       .popupImage{
-         width:100%;
-       }
         
     </style>
   </head>
 
   <body>
       <style>
+/*          Style for the toggleable menu*/
         #menu {
             background: #fff;
             position: absolute;
@@ -103,6 +96,7 @@
       <div id='map'></div>
       <nav id='menu'></nav>
       
+<!--      Div for the description panel... includes all text and strucutre of text -->
       <div class="descriptionPanel" id="descriptionPanel">
      <span onClick=panelSelect() id="glyph" class="chevron glyphicon glyphicon-chevron-down"></span>
      <h3 style="background-color:#a8a6a6; margin-left: auto; margin-right: auto; 
@@ -150,30 +144,32 @@
   
       
     <script>
+//        Script for mapbox map & styles
         mapboxgl.accessToken = 'pk.eyJ1IjoiaGxvcmVuIiwiYSI6ImNsZzVneHVsdDAzZGgzZ3A2M2tsc3poaGIifQ.bBdl7_xDAAJbX_XYyvXWGw';//  Put your access token between the single quotes.
         
         var map = new mapboxgl.Map({
-            container: 'map', // id of a div on your page, where the map will be inserted
+            container: 'map', // id of a div on your page
             style: 'mapbox://styles/hloren/cli3ldy8200xq01rh8nwbfkst', // stylesheet location
-            center: [-129.868606, 39.858183], // starting position [lng, lat] 41.858183, -124.868606
+            center: [-129.868606, 39.858183], // starting position 
             zoom: 4.2
         });
-        
+//        create the scale variable 
         const scale = new mapboxgl.ScaleControl({
             maxWidth: 100,
             unit: 'imperial',
         });
-        
+        // add the scale to the map
         map.addControl(scale, "bottom-right");
-       
+        // add zoom buttons to map
         map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
         
+        // once map loads, add layers from mapbox tilesets
         map.on("load", () => {
-            // conservation areas 
-            // EFH, essential fish habitat  
+             
+            // EFH, essential fish habitat tileset 
             map.addSource('Essential Fish Habitat', {
                 type: "vector",
-                url: 'mapbox://hloren.37bkps78'
+                url: 'mapbox://hloren.37bkps78' //connect to tileset 
             });
             map.addLayer({
                 'id': 'Groundfish Essential Fish Habitat',
@@ -190,9 +186,10 @@
                 'source-layer': "EFH_2006-2esm4n"
             })
             
+            // Conservation areas tileset 
             map.addSource('Conservation Areas', {
                 type: "vector",
-                url: 'mapbox://hloren.0uetyyx8'
+                url: 'mapbox://hloren.0uetyyx8' // connect to tileset 
             });
             map.addLayer({
                 'id': 'Conservation Areas',
@@ -209,10 +206,10 @@
                 'source-layer': "EFH_ConsArea_polygons_v201911-79sz11"
             })
             
-            // deep sea conservation areas 
+            // deep sea conservation areas tileset
             map.addSource('Deep Sea Conservation Areas', {
                 type: "vector",
-                url: 'mapbox://hloren.4c1tkf9i'
+                url: 'mapbox://hloren.4c1tkf9i' // connect to tile set 
             });
             map.addLayer({
                 'id': 'Deep Sea Conservation Areas',
@@ -229,10 +226,10 @@
                 'source-layer': "DECA_polygons_v20191107-ac85h9"
             })
             
-            // 700 fm closure area  
+            // 700 fm closure area tileset 
             map.addSource('700fm Closure Area', {
                 type: "vector",
-                url: 'mapbox://hloren.0n03jhq8'
+                url: 'mapbox://hloren.0n03jhq8' // connect to tile set 
             });
             map.addLayer({
                 'id': '700fm Closure Area',
@@ -251,10 +248,11 @@
             
         })
         
-          
+ // functions to change text in description panel when a layer is clicked 
+        // Essential fish habitat clickable layer funciton 
         map.on('click', 'Groundfish Essential Fish Habitat', (e) => {
-            
           console.log(e.features[0].properties);
+          // alter the text of original description panel using the ids 
           document.getElementById("boxTitle").innerHTML = "Groundfish Esentiall Fish Habitat (EFH)"
           document.getElementById("Prohibit").innerHTML = "" 
           document.getElementById("innerInfo").innerHTML = "NOAA Fisheries define these areas to help identify and protect marine species’ habitats. Eight hundred million acres of habitat (including all marine life) have been protected by help from NOAA. Fishery management councils use the defined EFH areas to establish which fishing practices and gear are prohibited in habitats and/or populations requiring protection. These habitats ensure the area receives proper protection during any future use or activity, whether recreational, commercial, or federal. ";
@@ -266,10 +264,12 @@
         });
         
         
-        
+        // deep sea conservation areas clickable layer function 
         map.on('click', 'Deep Sea Conservation Areas', (e) => {
           console.log(e.features[0].properties);
+          // retreive name of area from properties
           var myArea = e.features[0].properties["AREA_NAME"];
+          // alter the text of original description panel using the ids 
           document.getElementById("boxTitle").innerHTML = myArea;
           document.getElementById("innerInfo").innerHTML = "This is where I will put information about the deep sea conservation areas";
           document.getElementById("image").innerHTML = ""
@@ -280,10 +280,14 @@
           document.getElementById("innerInfo3").innerHTML = ""
         });
         
+        // conservation areas clickable layer function 
         map.on('click', 'Conservation Areas', (e) => {
           console.log(e.features[0].properties);
+          // retreive name of area from properties
           var myArea = e.features[0].properties["AREA_NAME"];
+          // retreive prohibited fishing practices from properties
           var fishingProhibit = e.features[0].properties["PROHIBIT"];
+          // alter the text of original description panel using the ids
           document.getElementById("boxTitle").innerHTML = "Conservation Area: " + myArea;
           document.getElementById("innerInfo").innerHTML = "This is where I will put information about the conservation areas.";
           document.getElementById("Prohibit").innerHTML ="PROHIBITED FISHING PRACTICES: " + fishingProhibit;
@@ -294,10 +298,14 @@
           document.getElementById("innerInfo3").innerHTML = ""
         });
         
+        // 700 fm closure area areas clickable layer function 
         map.on('click', '700fm Closure Area', (e) => {
           console.log(e.features[0].properties);
+          // retreive name of area from properties
           var myArea = e.features[0].properties["AREA_NAME"];
+          // retreive prohibited fishing practices from properties
           var fishingProhibit = e.features[0].properties["PROHIBIT"];
+          // alter the text of original description panel using the ids
           document.getElementById("boxTitle").innerHTML = myArea;
           document.getElementById("Prohibit").innerHTML ="PROHIBITED FISHING PRACTICES: " + fishingProhibit; 
           document.getElementById("innerInfo").innerHTML = "This is where I will put information about the 700 fm closure areas";
@@ -308,12 +316,9 @@
           document.getElementById("innerInfo3").innerHTML = ""
         });
         
-        
-        // want to make it so when i clikc on any other spot on the map, it returns to the original info panel.
-        
-        
-        
-        
+        // function to create toggleable layers through the menu (this code was found online through mapbox examples)
+            // not sure exactly of every function of the code
+            // https://docs.mapbox.com/mapbox-gl-js/example/toggle-layers/ 
         map.on('idle', () => {
             if (!map.getLayer("Conservation Areas") || !map.getLayer("Deep Sea Conservation Areas") ||
                 !map.getLayer("700fm Closure Area") || !map.getLayer('Groundfish Essential Fish Habitat')) {
