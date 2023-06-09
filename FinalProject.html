@@ -35,7 +35,7 @@
          transition: width 2s, height 2s;
          overflow: auto;
          color: #151414;
-         background: #515657;
+         background: #a8a6a6;
          opacity: 0.7;
          font-family: 'DINPro-Bold', sans-serif;
          border-radius: 7px;
@@ -103,20 +103,20 @@
                 opacity: 0.7; font-size: 200%; text-align: center; margin-top: 10px">
          <span id = "boxTitle">West Coast Groundfish Fishery:</span>
      </h3>
-          
-     <p style="margin-left: 10px; margin-right: 10px;text-transform: uppercase">
-         <span id = "Prohibit"></span> 
-          </p>
+     
      <p>
           <span id="image">
           <img src="https://www.fisheries.noaa.gov/s3/dam-migration/640x427-west-coast-groundfish.jpg?itok=W2DvR0rG" alt="Illustration of West Coast groundfish species canary rockfish, lingcod, and Dover sole. Credit: Jack Hornady." style="width:350px;height:200px;margin-left: 60px">
            </span>
           </p>
           
-     <h3 ><b>General Information:</b></h3>
-     <p style="margin-left: 10px; margin-right: 10px;">
+     <h3 style= "background-color:#a8a6a6"><b>General Information:</b></h3>
+     <p style="margin-left: 10px; margin-right: 10px; background-color:#a8a6a6">
+         <span id = "Prohibit"></span>
+         </p>
+     <p style="margin-left: 10px; margin-right: 10px; background-color:#a8a6a6">
          <span id="innerInfo">Groundfish is a classification of many species that dwell near or on the ocean floor. They are also known as Demersal fish due to their habitation within the Demersal Zone, where they live and feed. Groundfish are in many areas of the world, including the Pacific and Atlantic Coastal Regions. This interactive map focuses on the US Pacific Coast Groundfish populations, including Washington, Oregon, and California.<br><br> Types of Groundfish:
-             <ul id = "list">
+             <ul id = "list" style = "background-color:#a8a6a6">
                  <li>Roundfish (50+ species)</li>
                  <li>Flatfish (12 species)</li>
                  <li>Rockfish (12 species)</li>
@@ -125,11 +125,11 @@
         </span>     
      </p>
           
-     <p style="margin-left: 10px; margin-right: 10px;">
+     <p style="margin-left: 10px; margin-right: 10px; background-color:#a8a6a6">
          <span id="innerInfo2">The Pacific coast groundfish fishery experienced a severe decline in species populations during the 1990s. However, the fishery saw a remarkable recovery in the years since to levels greater than previously due to the fishery's and its stakeholders' total commitment to sustainability.</span>
      </p>
           
-     <p style="margin-left: 10px; margin-right: 10px;">
+     <p style="margin-left: 10px; margin-right: 10px; background-color:#a8a6a6">
          <span id = "innerInfo3">The Pacific Coast Groundfish Fishery is under the management of the Pacific Fishery Management Council, established by the Magnuson Fishery Conservation and Management Act of 1976. This council manages 119 species of salmon, coastal pelagic species, and highly migratory species, along with groundfish for commercial, recreational, and tribal fisheries on the West Coast. In 2011, the Groundfish fisheries were placed under a “catch shares” management by the council. This method of allocation potions of the allowable catch led to some species of groundfish to be completely rebuilt.
          </span>
      </p>
@@ -137,7 +137,7 @@
           
      <p style="margin-left: 10px; margin-right: 10px;font-size:12px">
           <span id= "link">
-            <a href="https://www.fisheries.noaa.gov/species/west-coast-groundfish">West Coast Groundfish - NOAA</a>
+            <a href="https://www.fisheries.noaa.gov/species/west-coast-groundfish">Source: West Coast Groundfish - NOAA</a>
              </span>
           </p>
    </div>
@@ -246,6 +246,19 @@
                 'source-layer': "EFH_700fm_polygons_v20191107-4k4snt"
             })
             
+            // define ids for layers
+            const toggleableLayerIds = ['Groundfish Essential Fish Habitat','Conservation Areas','Deep Sea Conservation Areas','700fm Closure Area'];
+            
+            //change pointer when pointer enters layer 
+            map.on('mouseenter', toggleableLayerIds, function () {
+                  map.getCanvas().style.cursor = 'pointer';
+             });
+
+             // Change it back to a pointer when it leaves.
+             map.on('mouseleave', toggleableLayerIds, function () {
+                  map.getCanvas().style.cursor = '';
+             });
+            
         })
         
  // functions to change text in description panel when a layer is clicked 
@@ -257,7 +270,7 @@
           document.getElementById("Prohibit").innerHTML = "" 
           document.getElementById("innerInfo").innerHTML = "NOAA Fisheries define these areas to help identify and protect marine species’ habitats. Eight hundred million acres of habitat (including all marine life) have been protected by help from NOAA. Fishery management councils use the defined EFH areas to establish which fishing practices and gear are prohibited in habitats and/or populations requiring protection. These habitats ensure the area receives proper protection during any future use or activity, whether recreational, commercial, or federal. ";
           document.getElementById("image").innerHTML = ""
-          document.getElementById("link").innerHTML = ""
+          document.getElementById("link").innerHTML = "Data Source: https://www.fisheries.noaa.gov/resource/map/essential-fish-habitat-groundfish-and-salmon"
           document.getElementById("list").innerHTML = ""
           document.getElementById("innerInfo2").innerHTML = "NOAA worked alongside the Pacific Fishery Management Council to define Essential Fish Habitats on the West Coast for each federally managed fish stock, including those of the Groundfish. Their work was performed under the Magnuson-Stevens Act."
           document.getElementById("innerInfo3").innerHTML = "The Essential Fish Habitats for Groundfish were first established with the addition of Amendment 19 to the Groundfish Fishery Management Plan by the Pacific Fisheries Management Council in 2006. In 2020, Amendment 28 was proposed and accepted, adding and updating the EFH to the management plan. "
@@ -271,12 +284,12 @@
           var myArea = e.features[0].properties["AREA_NAME"];
           // alter the text of original description panel using the ids 
           document.getElementById("boxTitle").innerHTML = myArea;
-          document.getElementById("innerInfo").innerHTML = "This is where I will put information about the deep sea conservation areas";
+          document.getElementById("innerInfo").innerHTML = "In 2020, with Amendment 28, proposed by the Pacific Fishery Management Council, DECAs or Deep Sea Conservation areas were introduced to the groundfish fishery management plan to protect deep-water groundfish habitats from ahrmful fishing practices. Such practices include fishing with bottom-contacting gears like beam trawl, bottom trawl, dredge, fixed fear, set net, demersal seine, dinglebar gear, pot gear, and any other forms of gear that make irect contact with teh sea floor. This area defined by the management council is closed to all practices mentioned above. The area is seaward of the groundfish essential fish habitat areas and covers 123,00 square miles.";
           document.getElementById("image").innerHTML = ""
           document.getElementById("Prohibit").innerHTML = "" 
-          document.getElementById("link").innerHTML = ""
+          document.getElementById("link").innerHTML = "Data Source: https://www.fisheries.noaa.gov/resource/map/essential-fish-habitat-groundfish-and-salmon" 
           document.getElementById("list").innerHTML = ""
-          document.getElementById("innerInfo2").innerHTML = "More info to come as I further explore groundfish..."
+          document.getElementById("innerInfo2").innerHTML = ""
           document.getElementById("innerInfo3").innerHTML = ""
         });
         
@@ -287,15 +300,17 @@
           var myArea = e.features[0].properties["AREA_NAME"];
           // retreive prohibited fishing practices from properties
           var fishingProhibit = e.features[0].properties["PROHIBIT"];
+          // retreive state that CA is in from properties
+          var state = e.features[0].properties["STATE"];
           // alter the text of original description panel using the ids
-          document.getElementById("boxTitle").innerHTML = "Conservation Area: " + myArea;
-          document.getElementById("innerInfo").innerHTML = "This is where I will put information about the conservation areas.";
-          document.getElementById("Prohibit").innerHTML ="PROHIBITED FISHING PRACTICES: " + fishingProhibit;
+          document.getElementById("boxTitle").innerHTML = "Essential Fish Habitat Conservation Area";
+          document.getElementById("innerInfo").innerHTML = "Conservation Area Name: " + myArea;
+          document.getElementById("Prohibit").innerHTML ="Prohibited Fishing Practices: " + fishingProhibit;
           document.getElementById("image").innerHTML = ""
-          document.getElementById("link").innerHTML = ""
+          document.getElementById("link").innerHTML = "Data Source: https://www.fisheries.noaa.gov/resource/map/essential-fish-habitat-groundfish-and-salmon"
           document.getElementById("list").innerHTML = ""
-          document.getElementById("innerInfo2").innerHTML = "More info to come as I further explore groundfish..."
-          document.getElementById("innerInfo3").innerHTML = ""
+          document.getElementById("innerInfo2").innerHTML = "State: " + state;
+          document.getElementById("innerInfo3").innerHTML = "Essential Fish Habitat Conservation Areas is a classification of the essential fish habitat areas identified by the Pacific FIhery Management Council. These areas are found all along the west coast, each with certain types of fishing practices prohibited, relating to the evaluation of the needs of the habitat. Some conservation areas are specific to certain species of fish. For example, Cowcod Conservation areas are found along the Southern California coast."
         });
         
         // 700 fm closure area areas clickable layer function 
@@ -307,12 +322,12 @@
           var fishingProhibit = e.features[0].properties["PROHIBIT"];
           // alter the text of original description panel using the ids
           document.getElementById("boxTitle").innerHTML = myArea;
-          document.getElementById("Prohibit").innerHTML ="PROHIBITED FISHING PRACTICES: " + fishingProhibit; 
-          document.getElementById("innerInfo").innerHTML = "This is where I will put information about the 700 fm closure areas";
+          document.getElementById("Prohibit").innerHTML ="Prohibited Fishing Practices: " + fishingProhibit; 
+          document.getElementById("innerInfo").innerHTML = "The conservation area established seaward of the 700 fm contour is protected by the Pacific Fishery Management Council from harmful fishing practices. (fm is the unit for fathoms, which is used as a nautical unit of depth) The fishing practices mainly include bottom-trawling fishing. This establish area is similar to the Deep Sea Conservation Area. ";
           document.getElementById("image").innerHTML = ""
-          document.getElementById("link").innerHTML = ""
+          document.getElementById("link").innerHTML = "Data Source: https://www.fisheries.noaa.gov/resource/map/essential-fish-habitat-groundfish-and-salmon"
           document.getElementById("list").innerHTML = ""
-          document.getElementById("innerInfo2").innerHTML = "More info to come as I further explore groundfish..."
+          document.getElementById("innerInfo2").innerHTML = ""
           document.getElementById("innerInfo3").innerHTML = ""
         });
         
